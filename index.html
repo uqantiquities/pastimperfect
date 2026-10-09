@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 30px;
+            background-color: #333333;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-top: 10px;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid white;
+            margin: 25px 0;
+        }
+
+        .description {
+            font-size: 20pt;
+            line-height: 1.5;
+            margin-bottom: 35px;
+        }
+
+        .vase-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .vase-button {
+            display: block;
+            padding: 10px;
+            background-color: #444444;
+            border: 1px solid white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .vase-button:hover {
+            background-color: #666666;
+        }
+
+        .vase-button img {
+            width: 100%;
+            height: 220px;
+            object-fit: contain;
+            display: block;
+        }
+
+        footer {
+            margin-top: 50px;
+            padding: 15px;
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 10pt;
+        }
+
+        @media (max-width: 650px) {
+            .vase-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            body {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>title</h1>
+
+    <hr>
+
+    <p class="description">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Sed do eiusmod tempor incididunt ut labore et dolore.
+    </p>
+
+    <div class="vase-container">
+
+        <a class="vase-button" href="page1.html">
+            <img src="vase1.jpg" alt="Vase 1">
+        </a>
+
+        <a class="vase-button" href="page2.html">
+            <img src="vase2.jpg" alt="Vase 2">
+        </a>
+
+        <a class="vase-button" href="page3.html">
+            <img src="vase3.jpg" alt="Vase 3">
+        </a>
+
+        <a class="vase-button" href="page4.html">
+            <img src="vase4.jpg" alt="Vase 4">
+        </a>
+
+    </div>
+
+    <footer>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+        sed do eiusmod tempor incididunt ut labore.
+    </footer>
+
+</body>
+</html>
