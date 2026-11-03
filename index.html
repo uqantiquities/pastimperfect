@@ -15,7 +15,8 @@
         body {
             background-color: #dddbdc;
             color: #3a383a;
-            font-family: 'Gotham', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-family: 'Gotham', 'Helvetica Neue',
+                         Helvetica, Arial, sans-serif;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -33,7 +34,6 @@
             font-size: 2.5rem;
             font-weight: 300;
             letter-spacing: 1px;
-            text-transform: sentencecase;
             color: #3a383a;
         }
 
@@ -54,50 +54,128 @@
             margin-bottom: 50px;
         }
 
+        .citation {
+            font-size: 15pt;
+            text-align: center;
+            margin-top: 5px;
+            margin-bottom: 50px;
+        }
+
+        /* Main three-column layout */
+
         .container {
             display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 40px;
             max-width: 1200px;
             width: 100%;
+            align-items: start;
         }
 
-        .card {
-            display: block;
-            text-decoration: none;
-            background-color: #393739;
-            border-radius: 12px;
-            padding: 25px;
+        .column {
+            width: 100%;
             text-align: center;
+        }
+
+        .column h2 {
+            font-size: 1.6rem;
+            font-weight: 500;
+            color: #3a383a;
+            margin-bottom: 25px;
+        }
+
+        /* Thumbnail grid */
+
+        .modal-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .modal-trigger {
+            display: block;
+            width: 100%;
+            border: 1px solid #3a383a;
+            border-radius: 10px;
+            padding: 10px;
+            background-color: #393739;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            border: 1px solid #3a383a;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
-            border-color: #3a383a;
+        .modal-trigger:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
         }
 
-        .card:focus-visible {
+        .modal-trigger:focus-visible {
             outline: 2px solid #393739;
             outline-offset: 4px;
         }
 
-        .card img {
+        .modal-trigger img {
             width: 100%;
-            height: 220px;
+            aspect-ratio: 1 / 1;
             object-fit: contain;
             display: block;
-            margin-bottom: 20px;
+            background-color: #dddbdc;
+            border-radius: 5px;
         }
 
-        .card-title {
-            font-size: 1.5rem;
-            font-weight: 500;
-            color: #3a383a;
+        /* Large image modal */
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            inset: 0;
+            background-color: rgba(30, 29, 30, 0.92);
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            position: relative;
+            width: 100%;
+            max-width: 1400px;
+            max-height: 90vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content img {
+            width: 100%;
+            max-height: 85vh;
+            object-fit: contain;
+            display: block;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 35px;
+            font-weight: 300;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .close-modal:hover {
+            color: #dddbdc;
+        }
+
+        body.modal-open {
+            overflow: hidden;
         }
 
         footer {
@@ -110,20 +188,24 @@
             line-height: 1.5;
         }
 
-        /* Tablet and smaller screens */
+        /* Tablet */
+
         @media (max-width: 900px) {
             .container {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
-                gap: 25px;
+                gap: 30px;
             }
 
-            .card img {
-                height: 200px;
+            .column:last-child {
+                grid-column: 1 / -1;
+                max-width: 600px;
+                justify-self: center;
             }
         }
 
-        /* Mobile screens */
-        @media (max-width: 480px) {
+        /* Mobile */
+
+        @media (max-width: 600px) {
             body {
                 padding: 25px 15px;
             }
@@ -133,31 +215,49 @@
             }
 
             .description {
-                font-size: 20pt;
+                font-size: 16pt;
+                margin-bottom: 15px;
+            }
+
+            .citation {
+                font-size: 12pt;
                 margin-bottom: 35px;
             }
 
             .container {
+                grid-template-columns: 1fr;
+                gap: 45px;
+            }
+
+            .column:last-child {
+                grid-column: auto;
+                max-width: none;
+            }
+
+            .column h2 {
+                font-size: 1.4rem;
+            }
+
+            .modal-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
                 gap: 15px;
             }
 
-            .card {
+            .modal {
                 padding: 15px;
             }
 
-            .card img {
-                height: 150px;
-            }
-
-            .card-title {
-                font-size: 1.1rem;
+            .close-modal {
+                top: -35px;
             }
         }
 
         /* Landscape iPad */
+
         @media (orientation: landscape)
             and (min-width: 768px)
             and (max-width: 1024px) {
+
             body {
                 padding: 20px;
             }
@@ -166,14 +266,11 @@
                 gap: 25px;
             }
 
-            .card {
-                padding: 20px;
-            }
-
-            .card img {
-                height: 160px;
+            .modal-grid {
+                gap: 12px;
             }
         }
+
     </style>
 </head>
 
@@ -186,42 +283,263 @@
     <hr>
 
     <p class="description">
-       "The ancients...thought that which could not happen in reality, could not have a sure justification in its copies." 
-      <br> </p> <p size=15pt> Vitruvius, On Architecture 4.2.5 <br>
+        "The ancients...thought that which could not happen in
+        reality, could not have a sure justification in its copies."
     </p>
+
+    <p class="citation">
+        Vitruvius, On Architecture 4.2.5
+    </p>
+
 
     <main class="container">
 
-        <!-- Vase 1: replace vase1.jpg with your image -->
-        <a class="card" href="page1.html">
-            <img src="vase1.jpg" alt="Vase 1">
-            <h2 class="card-title">Loutrophorai</h2>
-        </a>
+        <!-- COLUMN 1: LOUTROPHORAI -->
 
-        <!-- Vase 2: replace vase2.jpg with your image -->
-        <a class="card" href="page2.html">
-            <img src="vase2.jpg" alt="Vase 2">
-            <h2 class="card-title">Lekythoi</h2>
-        </a>
+        <section class="column">
 
-        <!-- Vase 3: replace vase3.jpg with your image -->
-        <a class="card" href="page3.html">
-            <img src="vase3.jpg" alt="Vase 3">
-            <h2 class="card-title">vase 3</h2>
-        </a>
+            <h2>Loutrophorai</h2>
 
-        <!-- Vase 4: replace vase4.jpg with your image
-        <a class="card" href="page4.html">
-            <img src="vase4.jpg" alt="Vase 4">
-            <h2 class="card-title">Alabastra and Aryballoi</h2>
-        </a> -->
+            <div class="modal-grid">
+
+                <button class="modal-trigger"
+                    data-image="images/loutrophorai-1-large.png"
+                    aria-label="View Loutrophoros 1">
+                    <img src="images/loutrophorai-1-thumb.png"
+                         alt="Loutrophoros 1">
+                </button>
+
+                <button class="modal-trigger"
+                    data-image="images/loutrophorai-2-large.png"
+                    aria-label="View Loutrophoros 2">
+                    <img src="images/loutrophorai-2-thumb.png"
+                         alt="Loutrophoros 2">
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- COLUMN 2: LEKYTHOI -->
+
+        <section class="column">
+
+            <h2>Lekythoi</h2>
+
+            <div class="modal-grid">
+
+                <button class="modal-trigger"
+                    data-image="images/lekythoi-1-large.png"
+                    aria-label="View Lekythos 1">
+                    <img src="images/lekythoi-1-thumb.png"
+                         alt="Lekythos 1">
+                </button>
+
+                <button class="modal-trigger"
+                    data-image="images/lekythoi-2-large.png"
+                    aria-label="View Lekythos 2">
+                    <img src="images/lekythoi-2-thumb.png"
+                         alt="Lekythos 2">
+                </button>
+
+                <button class="modal-trigger"
+                    data-image="images/lekythoi-3-large.png"
+                    aria-label="View Lekythos 3">
+                    <img src="images/lekythoi-3-thumb.png"
+                         alt="Lekythos 3">
+                </button>
+
+                <button class="modal-trigger"
+                    data-image="images/lekythoi-4-large.png"
+                    aria-label="View Lekythos 4">
+                    <img src="images/lekythoi-4-thumb.png"
+                         alt="Lekythos 4">
+                </button>
+
+                <button class="modal-trigger"
+                    data-image="images/lekythoi-5-large.png"
+                    aria-label="View Lekythos 5">
+                    <img src="images/lekythoi-5-thumb.png"
+                         alt="Lekythos 5">
+                </button>
+
+                <button class="modal-trigger"
+                    data-image="images/lekythoi-6-large.png"
+                    aria-label="View Lekythos 6">
+                    <img src="images/lekythoi-6-thumb.png"
+                         alt="Lekythos 6">
+                </button>
+
+                <button class="modal-trigger"
+                    data-image="images/lekythoi-7-large.png"
+                    aria-label="View Lekythos 7">
+                    <img src="images/lekythoi-7-thumb.png"
+                         alt="Lekythos 7">
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- COLUMN 3: ALABASTRA AND ARYBALLOI -->
+
+        <section class="column">
+
+            <h2>Alabastra and Aryballoi</h2>
+
+            <div class="modal-grid">
+
+                <button class="modal-trigger"
+                    data-image="images/alabastra-1-large.png"
+                    aria-label="View Alabastron 1">
+                    <img src="images/alabastra-1-thumb.png"
+                         alt="Alabastron 1">
+                </button>
+
+                <button class="modal-trigger"
+                    data-image="images/alabastra-2-large.png"
+                    aria-label="View Alabastron 2">
+                    <img src="images/alabastra-2-thumb.png"
+                         alt="Alabastron 2">
+                </button>
+
+                <button class="modal-trigger"
+                    data-image="images/alabastra-3-large.png"
+                    aria-label="View Alabastron 3">
+                    <img src="images/alabastra-3-thumb.png"
+                         alt="Alabastron 3">
+                </button>
+
+                <button class="modal-trigger"
+                    data-image="images/aryballoi-1-large.png"
+                    aria-label="View Aryballos 1">
+                    <img src="images/aryballoi-1-thumb.png"
+                         alt="Aryballos 1">
+                </button>
+
+                <button class="modal-trigger"
+                    data-image="images/aryballoi-2-large.png"
+                    aria-label="View Aryballos 2">
+                    <img src="images/aryballoi-2-thumb.png"
+                         alt="Aryballos 2">
+                </button>
+
+                <button class="modal-trigger"
+                    data-image="images/aryballoi-3-large.png"
+                    aria-label="View Aryballos 3">
+                    <img src="images/aryballoi-3-thumb.png"
+                         alt="Aryballos 3">
+                </button>
+
+            </div>
+
+        </section>
 
     </main>
+
+
+    <!-- SHARED IMAGE MODAL -->
+
+    <div class="modal" id="imageModal"
+         role="dialog" aria-modal="true"
+         aria-label="Artefact image viewer">
+
+        <div class="modal-content">
+
+            <button class="close-modal"
+                    id="closeModal"
+                    aria-label="Close image viewer">
+                &times;
+            </button>
+
+            <img id="modalImage"
+                 src=""
+                 alt="Enlarged artefact image">
+
+        </div>
+
+    </div>
+
 
     <footer>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit,
         sed do eiusmod tempor incididunt ut labore.
     </footer>
 
-</body>
-</html>
+
+    <script>
+
+        const modal = document.getElementById('imageModal');
+        const modalImage = document.getElementById('modalImage');
+        const closeButton = document.getElementById('closeModal');
+        const triggers = document.querySelectorAll('.modal-trigger');
+
+        let previouslyFocused = null;
+
+        // Open modal when thumbnail is clicked
+
+        triggers.forEach(trigger => {
+
+            trigger.addEventListener('click', () => {
+
+                previouslyFocused = document.activeElement;
+
+                const imagePath = trigger.dataset.image;
+
+                modalImage.src = imagePath;
+                modal.classList.add('active');
+
+                document.body.classList.add('modal-open');
+
+                closeButton.focus();
+
+            });
+
+        });
+
+
+        // Close modal
+
+        function closeModal() {
+
+            modal.classList.remove('active');
+            document.body.classList.remove('modal-open');
+
+            modalImage.src = '';
+
+            if (previouslyFocused) {
+                previouslyFocused.focus();
+            }
+
+        }
+
+
+        closeButton.addEventListener('click', closeModal);
+
+
+        // Close when clicking outside the image
+
+        modal.addEventListener('click', event => {
+
+            if (event.target === modal) {
+                closeModal();
+            }
+
+        });
+
+
+        // Close with Escape key
+
+        document.addEventListener('keydown', event => {
+
+            if (event.key === 'Escape' &&
+                modal.classList.contains('active')) {
+
+                closeModal();
+
+            }
+
+        });
+</script>
