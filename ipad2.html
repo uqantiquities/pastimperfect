@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Artefact Explorer</title>
+<title>Past Imperfect</title>
 
 <style>
 
@@ -66,15 +66,37 @@ hr {
     margin-bottom: 30px;
 }
 
-/* MAIN LAYOUT */
+/* MAIN TWO-COLUMN LAYOUT */
 
 .container {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
     gap: 30px;
     max-width: 1200px;
     width: 100%;
     align-items: start;
+}
+
+/* CUPS - LEFT COLUMN */
+
+.category-row.cups {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+}
+
+/* FIGURINES - TOP RIGHT */
+
+.category-row.figurines {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+/* SHABTIS - BOTTOM RIGHT */
+
+.category-row.shabtis {
+    grid-column: 2;
+    grid-row: 2;
 }
 
 .category-row {
@@ -159,7 +181,7 @@ hr {
     display: flex;
 }
 
-/* SAME MODAL DIMENSIONS FOR ALL GROUPS */
+/* CONSISTENT MODAL DIMENSIONS */
 
 .modal-content {
     position: relative;
@@ -293,22 +315,34 @@ and (orientation: portrait) {
     }
 
     .container {
-        grid-template-columns: 1fr;
-        gap: 30px;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+        gap: 20px;
     }
 
     .category-row {
-        max-width: 600px;
-        margin: 0 auto;
+        max-width: none;
+    }
+
+    .category-row.cups {
+        grid-column: 1;
+        grid-row: 1 / span 2;
+    }
+
+    .category-row.figurines {
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+    .category-row.shabtis {
+        grid-column: 2;
+        grid-row: 2;
     }
 
     .modal-grid {
-        grid-template-columns: repeat(5, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .modal-content {
-        max-height: 82vh;
-    }
 }
 
 /* MOBILE */
@@ -334,7 +368,15 @@ and (orientation: portrait) {
 
     .container {
         grid-template-columns: 1fr;
+        grid-template-rows: auto;
         gap: 30px;
+    }
+
+    .category-row.cups,
+    .category-row.figurines,
+    .category-row.shabtis {
+        grid-column: 1;
+        grid-row: auto;
     }
 
     .category-row {
@@ -394,9 +436,9 @@ and (orientation: portrait) {
 <main class="container">
 
 
-    <!-- CUPS -->
+    <!-- COLUMN 1: CUPS -->
 
-    <section class="category-row">
+    <section class="category-row cups">
 
         <h2>Cups</h2>
 
@@ -425,9 +467,9 @@ and (orientation: portrait) {
     </section>
 
 
-    <!-- FIGURINES -->
+    <!-- COLUMN 2, ROW 1: FIGURINES -->
 
-    <section class="category-row">
+    <section class="category-row figurines">
 
         <h2>Figurines</h2>
 
@@ -456,9 +498,9 @@ and (orientation: portrait) {
     </section>
 
 
-    <!-- SHABTIS -->
+    <!-- COLUMN 2, ROW 2: SHABTIS -->
 
-    <section class="category-row">
+    <section class="category-row shabtis">
 
         <h2>Shabtis</h2>
 
@@ -512,7 +554,6 @@ and (orientation: portrait) {
         </div>
 
     </section>
-
 
 </main>
 
