@@ -54,6 +54,8 @@ h2 {
     margin-bottom: 20px;
 }
 
+/* BODY COPY */
+
 .description {
     font-family: 'Montserrat', sans-serif;
     font-size: 16pt;
@@ -121,13 +123,6 @@ hr {
     text-align: center;
 }
 
-.left-column h2,
-.category-row h2 {
-    font-size: 1.35rem;
-    font-weight: 500;
-    margin-bottom: 18px;
-}
-
 /* LEFT THUMBNAILS */
 
 .left-column .modal-grid {
@@ -156,10 +151,22 @@ hr {
     display: grid;
     grid-template-columns: repeat(7, minmax(0, 1fr));
     gap: 10px;
+    justify-content: center;
 }
 
+/* CENTRE THUMBNAILS WITHIN EACH CATEGORY */
+
+.category-row .modal-grid {
+    justify-items: center;
+}
+
+/* CENTRE FIVE SHABTIS */
+
 .category-row:last-child .modal-grid {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    max-width: calc(100% * 5 / 6);
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* ALL THUMBNAILS SAME SIZE */
@@ -356,12 +363,6 @@ and (orientation: landscape) {
         gap: 24px;
     }
 
-    .left-column h2,
-    .category-row h2 {
-        font-size: 1.2rem;
-        margin-bottom: 14px;
-    }
-
     .right-column {
         gap: 25px;
     }
@@ -402,9 +403,15 @@ and (orientation: portrait) {
         margin: auto;
     }
 
-    .modal-grid,
-    .category-row:last-child .modal-grid {
+    .modal-grid {
         grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .category-row:last-child .modal-grid {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        max-width: calc(100% * 5 / 6);
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .right-column {
@@ -444,9 +451,15 @@ and (orientation: portrait) {
         margin: auto;
     }
 
-    .modal-grid,
-    .category-row:last-child .modal-grid {
+    .modal-grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .category-row:last-child .modal-grid {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        max-width: calc(100% * 5 / 6);
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .right-column {
@@ -504,19 +517,19 @@ select {
         <div class="modal-grid">
 
             <button class="modal-trigger"
-                data-image="images/cup1.png"
+                data-image="images/cups1.png"
                 aria-label="View Cup 1">
 
-                <img src="images/cup1-thumb.png"
+                <img src="images/cups1-thumbs.png"
                      alt="Cup 1">
 
             </button>
 
             <button class="modal-trigger"
-                data-image="images/cup2.png"
+                data-image="images/cups2.png"
                 aria-label="View Cup 2">
 
-                <img src="images/cup2-thumb.png"
+                <img src="images/cups2-thumbs.png"
                      alt="Cup 2">
 
             </button>
@@ -538,19 +551,19 @@ select {
             <div class="modal-grid">
 
                 <button class="modal-trigger"
-                    data-image="images/figurine1.png"
+                    data-image="images/figurines1.png"
                     aria-label="View Figurine 1">
 
-                    <img src="images/figurine1-thumb.png"
+                    <img src="images/figurines1-thumbs.png"
                          alt="Figurine 1">
 
                 </button>
 
                 <button class="modal-trigger"
-                    data-image="images/figurine2.png"
+                    data-image="images/figurines2.png"
                     aria-label="View Figurine 2">
 
-                    <img src="images/figurine2-thumb.png"
+                    <img src="images/figurines2-thumbs.png"
                          alt="Figurine 2">
 
                 </button>
@@ -568,46 +581,46 @@ select {
             <div class="modal-grid">
 
                 <button class="modal-trigger"
-                    data-image="images/shabti1.png"
+                    data-image="images/shabtis1.png"
                     aria-label="View Shabti 1">
 
-                    <img src="images/shabti1-thumb.png"
+                    <img src="images/shabtis1-thumbs.png"
                          alt="Shabti 1">
 
                 </button>
 
                 <button class="modal-trigger"
-                    data-image="images/shabti2.png"
+                    data-image="images/shabtis2.png"
                     aria-label="View Shabti 2">
 
-                    <img src="images/shabti2-thumb.png"
+                    <img src="images/shabtis2-thumbs.png"
                          alt="Shabti 2">
 
                 </button>
 
                 <button class="modal-trigger"
-                    data-image="images/shabti3.png"
+                    data-image="images/shabtis3.png"
                     aria-label="View Shabti 3">
 
-                    <img src="images/shabti3-thumb.png"
+                    <img src="images/shabtis3-thumbs.png"
                          alt="Shabti 3">
 
                 </button>
 
                 <button class="modal-trigger"
-                    data-image="images/shabti4.png"
+                    data-image="images/shabtis4.png"
                     aria-label="View Shabti 4">
 
-                    <img src="images/shabti4-thumb.png"
+                    <img src="images/shabtis4-thumbs.png"
                          alt="Shabti 4">
 
                 </button>
 
                 <button class="modal-trigger"
-                    data-image="images/shabti5.png"
+                    data-image="images/shabtis5.png"
                     aria-label="View Shabti 5">
 
-                    <img src="images/shabti5-thumb.png"
+                    <img src="images/shabtis5-thumbs.png"
                          alt="Shabti 5">
 
                 </button>
@@ -654,7 +667,7 @@ const triggers = document.querySelectorAll('.modal-trigger');
 
 let previouslyFocused = null;
 
-// Open modal
+// OPEN MODAL
 
 triggers.forEach(trigger => {
 
@@ -673,7 +686,7 @@ triggers.forEach(trigger => {
 
 });
 
-// Close modal
+// CLOSE MODAL
 
 function closeModal() {
 
@@ -690,7 +703,7 @@ function closeModal() {
 
 closeButton.addEventListener('click', closeModal);
 
-// Close by clicking outside image
+// CLOSE BY CLICKING OUTSIDE IMAGE
 
 modal.addEventListener('click', event => {
 
@@ -700,7 +713,7 @@ modal.addEventListener('click', event => {
 
 });
 
-// Close using Escape
+// CLOSE USING ESCAPE
 
 document.addEventListener('keydown', event => {
 
