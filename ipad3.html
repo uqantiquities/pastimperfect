@@ -6,12 +6,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Artefact Explorer</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800;900&display=swap"
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700,800,900"
       rel="stylesheet">
 
 <style>
+
+/* GENERAL RESET */
 
 * {
     margin: 0;
@@ -57,7 +57,6 @@ h2 {
 /* BODY COPY */
 
 .description {
-    font-family: 'Montserrat', sans-serif;
     font-size: 16pt;
     font-weight: 400;
     line-height: 1.5;
@@ -67,9 +66,7 @@ h2 {
 }
 
 .citation {
-    font-family: 'Montserrat', sans-serif;
     font-size: 12pt;
-    font-weight: 400;
     text-align: center;
     margin-bottom: 30px;
 }
@@ -78,7 +75,6 @@ h2 {
 
 .left-column > p,
 .category-row > p {
-    font-family: 'Montserrat', sans-serif;
     font-size: 1.35rem;
     font-weight: 800;
     line-height: 1.3;
@@ -89,9 +85,7 @@ h2 {
 /* FOOTER */
 
 footer {
-    font-family: 'Montserrat', sans-serif;
     font-size: 10pt;
-    font-weight: 400;
     margin-top: auto;
     padding: 30px 10px 5px;
     text-align: center;
@@ -108,77 +102,88 @@ hr {
 
 /* MAIN LAYOUT */
 
-.container {
-    display: grid;
-    grid-template-columns: 1fr 3fr;
-    gap: 30px;
-    max-width: 1200px;
-    width: 100%;
-    align-items: start;
-}
+/* Flexbox replaces newer layout dependencies */
 
-/* LEFT COLUMN */
+.container {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    align-items: flex-start;
+}
 
 .left-column {
+    width: 25%;
     text-align: center;
+    padding-right: 30px;
 }
 
-/* RIGHT COLUMN */
-
 .right-column {
+    width: 75%;
     display: flex;
     flex-direction: column;
-    gap: 32px;
-    min-width: 0;
 }
 
 .category-row {
     width: 100%;
     text-align: center;
+    margin-bottom: 32px;
 }
 
 /* THUMBNAIL GRIDS */
 
 .modal-grid {
-    display: grid;
-    gap: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
 }
 
-/* SCULPTURES: TWO VERTICAL THUMBNAILS */
+/* SCULPTURES */
 
 .left-column .modal-grid {
-    grid-template-columns: 1fr;
-    gap: 18px;
-    width: 100%;
-    max-width: 180px;
-    margin: 0 auto;
+    flex-direction: column;
+    align-items: center;
 }
 
-/* VESSELS: TWO CENTRED THUMBNAILS */
+.left-column .modal-trigger {
+    width: 100%;
+    max-width: 180px;
+    margin-bottom: 18px;
+}
+
+/* VESSELS */
 
 .category-row:first-child .modal-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
     width: 28.57%;
     margin-left: auto;
     margin-right: auto;
 }
 
-/* LAMPS: THREE CENTRED THUMBNAILS */
+.category-row:first-child .modal-trigger {
+    width: 50%;
+}
+
+/* LAMPS */
 
 .category-row:last-child .modal-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
     width: 42.86%;
     margin-left: auto;
     margin-right: auto;
 }
 
-/* ALL THUMBNAILS SAME SIZE */
+.category-row:last-child .modal-trigger {
+    width: 33.333%;
+}
+
+/* THUMBNAIL BUTTONS */
+
+/* Fixed height provides an aspect-ratio fallback */
 
 .modal-trigger {
-    width: 100%;
-    aspect-ratio: 1 / 1;
+    position: relative;
+    height: 150px;
     min-width: 0;
-    padding: 0;
+    padding: 5px;
+    margin-right: 5px;
 
     display: flex;
     align-items: center;
@@ -189,6 +194,9 @@ hr {
     background-color: #393739;
 
     cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+
     transition: all 0.3s ease;
 
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
@@ -199,7 +207,7 @@ hr {
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
-.modal-trigger:focus-visible {
+.modal-trigger:focus {
     outline: 2px solid #393739;
     outline-offset: 3px;
 }
@@ -215,43 +223,68 @@ hr {
 
 /* RESPONSIVE IMAGE MODAL */
 
+/*
+   IMPORTANT:
+   Explicit positioning is used instead of inset.
+   This supports older versions of iOS Safari.
+*/
+
 .modal {
     display: none;
     position: fixed;
-    z-index: 1000;
-    inset: 0;
+
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    z-index: 10000;
 
     background-color: rgba(30, 29, 30, 0.92);
 
-    justify-content: center;
-    align-items: center;
-
     padding: 4vh 4vw;
+
+    /* Safari compatibility */
+    -webkit-overflow-scrolling: touch;
 }
+
+/* OPEN MODAL */
 
 .modal.active {
-    display: flex;
+    display: block;
 }
 
-/* SAME MODAL SIZE FOR ALL ARTEFACTS */
+/* MODAL IMAGE CONTAINER */
 
 .modal-content {
-    position: relative;
+    position: absolute;
 
-    width: 100%;
-    height: 100%;
+    top: 50%;
+    left: 50%;
+
+    width: 92%;
+    height: 82%;
 
     max-width: 1100px;
     max-height: 82vh;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    /* Older Safari centering */
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+
+    text-align: center;
 }
 
-/* KEEP IMAGES WITHIN THE MODAL */
+/* MODAL IMAGE */
 
 .modal-content img {
+    display: block;
+
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
     width: 100%;
     height: 100%;
 
@@ -261,7 +294,8 @@ hr {
     object-fit: contain;
     object-position: center;
 
-    display: block;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
 }
 
 /* CLOSE BUTTON */
@@ -272,7 +306,7 @@ hr {
     top: 10px;
     right: 10px;
 
-    background: rgba(30, 29, 30, 0.65);
+    background: rgba(30, 29, 30, 0.85);
     border: none;
     border-radius: 50%;
 
@@ -283,18 +317,24 @@ hr {
     font-size: 32px;
     font-weight: 300;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: block;
+
+    line-height: 40px;
+    text-align: center;
 
     cursor: pointer;
-    z-index: 1001;
+    z-index: 10001;
+
+    -webkit-appearance: none;
+    appearance: none;
 }
 
 /* PREVENT BACKGROUND SCROLL */
 
 body.modal-open {
     overflow: hidden;
+    position: fixed;
+    width: 100%;
 }
 
 /* IPAD LANDSCAPE AND PORTRAIT */
@@ -306,8 +346,9 @@ body.modal-open {
     }
 
     .modal-content {
+        width: 90%;
+        height: 82%;
         max-width: 1000px;
-        max-height: 82vh;
     }
 }
 
@@ -320,7 +361,8 @@ body.modal-open {
     }
 
     .modal-content {
-        max-height: 85vh;
+        width: 92%;
+        height: 85%;
     }
 
     .close-modal {
@@ -361,22 +403,22 @@ and (orientation: landscape) {
         margin-bottom: 23px;
     }
 
-    .container {
-        grid-template-columns: 0.85fr 3.15fr;
-        gap: 24px;
+    .left-column {
+        width: 21%;
+        padding-right: 24px;
     }
 
     .right-column {
-        gap: 25px;
+        width: 79%;
     }
 
-    .modal-grid {
-        gap: 8px;
+    .category-row {
+        margin-bottom: 25px;
     }
 
-    .left-column .modal-grid {
-        gap: 14px;
+    .left-column .modal-trigger {
         max-width: 160px;
+        height: 140px;
     }
 
     .category-row:first-child .modal-grid {
@@ -405,14 +447,28 @@ and (max-width: 900px)
 and (orientation: portrait) {
 
     .container {
-        grid-template-columns: 1fr;
-        gap: 35px;
+        flex-direction: column;
+    }
+
+    .left-column {
+        width: 100%;
+        padding-right: 0;
+        margin-bottom: 35px;
     }
 
     .left-column .modal-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        max-width: 280px;
-        margin: auto;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .left-column .modal-trigger {
+        width: 130px;
+        height: 130px;
+        margin: 0 8px;
+    }
+
+    .right-column {
+        width: 100%;
     }
 
     .category-row:first-child .modal-grid {
@@ -423,8 +479,8 @@ and (orientation: portrait) {
         width: 66.67%;
     }
 
-    .right-column {
-        gap: 30px;
+    .category-row {
+        margin-bottom: 30px;
     }
 }
 
@@ -450,14 +506,28 @@ and (orientation: portrait) {
     }
 
     .container {
-        grid-template-columns: 1fr;
-        gap: 35px;
+        flex-direction: column;
+    }
+
+    .left-column {
+        width: 100%;
+        padding-right: 0;
+        margin-bottom: 35px;
     }
 
     .left-column .modal-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        max-width: 100px;
-        margin: auto;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .left-column .modal-trigger {
+        width: 100px;
+        height: 100px;
+        margin: 0 5px;
+    }
+
+    .right-column {
+        width: 100%;
     }
 
     .category-row:first-child .modal-grid {
@@ -468,8 +538,8 @@ and (orientation: portrait) {
         width: 100%;
     }
 
-    .right-column {
-        gap: 30px;
+    .category-row {
+        margin-bottom: 30px;
     }
 
     .left-column h2,
@@ -485,6 +555,8 @@ and (orientation: portrait) {
         padding-top: 25px;
     }
 }
+
+/* BUTTON FONT */
 
 button,
 input,
@@ -622,10 +694,10 @@ select {
 
 </main>
 
-<!-- SHARED MODAL -->
+<!-- SHARED IMAGE MODAL -->
 
 <div class="modal" id="imageModal"
-     role="dialog" aria-modal="true"
+     role="dialog"
      aria-label="Artefact image viewer">
 
     <div class="modal-content">
@@ -633,7 +705,9 @@ select {
         <button class="close-modal"
                 id="closeModal"
                 aria-label="Close image viewer">
+
             &times;
+
         </button>
 
         <img id="modalImage"
@@ -649,71 +723,192 @@ select {
 
 <script>
 
-const modal = document.getElementById('imageModal');
-const modalImage = document.getElementById('modalImage');
-const closeButton = document.getElementById('closeModal');
-const triggers = document.querySelectorAll('.modal-trigger');
+/*
+   IOS 10.3.3 COMPATIBLE MODAL JAVASCRIPT
 
-let previouslyFocused = null;
+   Uses ES5 syntax for older Safari.
+   Avoids:
+   - const
+   - let
+   - arrow functions
+   - NodeList.forEach
+   - dataset
+   - event.key
+*/
 
-// OPEN MODAL
+/* GET PAGE ELEMENTS */
 
-triggers.forEach(trigger => {
+var modal = document.getElementById('imageModal');
 
-    trigger.addEventListener('click', () => {
+var modalImage = document.getElementById('modalImage');
 
-        previouslyFocused = document.activeElement;
+var closeButton = document.getElementById('closeModal');
 
-        modalImage.src = trigger.dataset.image;
+var triggers = document.querySelectorAll('.modal-trigger');
 
-        modal.classList.add('active');
-        document.body.classList.add('modal-open');
+var previouslyFocused = null;
 
-        closeButton.focus();
+var previousScrollPosition = 0;
 
-    });
 
-});
+/* OPEN MODAL */
 
-// CLOSE MODAL
+function openModal(trigger) {
+
+    if (!trigger) {
+        return;
+    }
+
+    previouslyFocused = document.activeElement;
+
+    /* Save current scroll position */
+
+    previousScrollPosition =
+        window.pageYOffset ||
+        document.documentElement.scrollTop ||
+        0;
+
+    /* Get image path using older Safari-compatible method */
+
+    var imagePath = trigger.getAttribute('data-image');
+
+    if (!imagePath) {
+        return;
+    }
+
+    /* Load enlarged image */
+
+    modalImage.src = imagePath;
+
+    /* Display modal */
+
+    modal.classList.add('active');
+
+    document.body.classList.add('modal-open');
+
+    /* Lock background scroll */
+
+    document.body.style.top =
+        '-' + previousScrollPosition + 'px';
+
+    /* Move focus to close button */
+
+    closeButton.focus();
+
+}
+
+
+/* CLOSE MODAL */
 
 function closeModal() {
 
+    if (!modal.classList.contains('active')) {
+        return;
+    }
+
+    /* Hide modal */
+
     modal.classList.remove('active');
+
+    /* Restore body scrolling */
+
     document.body.classList.remove('modal-open');
 
-    modalImage.src = '';
+    document.body.style.top = '';
+
+    /* Clear enlarged image */
+
+    modalImage.removeAttribute('src');
+
+    /* Restore original scroll position */
+
+    window.scrollTo(0, previousScrollPosition);
+
+    /* Restore keyboard focus */
 
     if (previouslyFocused) {
+
         previouslyFocused.focus();
+
     }
 
 }
 
-closeButton.addEventListener('click', closeModal);
 
-// CLOSE BY CLICKING OUTSIDE IMAGE
+/* CONNECT ALL THUMBNAIL BUTTONS */
 
-modal.addEventListener('click', event => {
+/* Traditional loop for older Safari compatibility */
+
+for (var i = 0; i < triggers.length; i++) {
+
+    (function(trigger) {
+
+        trigger.addEventListener('click', function(event) {
+
+            event.preventDefault();
+
+            openModal(trigger);
+
+        }, false);
+
+    })(triggers[i]);
+
+}
+
+
+/* CLOSE BUTTON */
+
+closeButton.addEventListener('click', function(event) {
+
+    event.preventDefault();
+
+    closeModal();
+
+}, false);
+
+
+/* CLOSE WHEN TAPPING OUTSIDE THE IMAGE */
+
+modal.addEventListener('click', function(event) {
 
     if (event.target === modal) {
+
         closeModal();
+
     }
 
-});
+}, false);
 
-// CLOSE USING ESCAPE
 
-document.addEventListener('keydown', event => {
+/* CLOSE USING ESCAPE KEY */
 
-    if (event.key === 'Escape' &&
+document.addEventListener('keydown', function(event) {
+
+    event = event || window.event;
+
+    var key = event.keyCode || event.which;
+
+    if (key === 27 &&
         modal.classList.contains('active')) {
 
         closeModal();
 
     }
 
-});
+}, false);
+
+
+/* PREVENT BACKGROUND TOUCH SCROLL WHILE MODAL IS OPEN */
+
+modal.addEventListener('touchmove', function(event) {
+
+    if (event.target === modal) {
+
+        event.preventDefault();
+
+    }
+
+}, false);
 
 </script>
 
