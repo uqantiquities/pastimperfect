@@ -220,56 +220,123 @@ hr {
     border-radius: 4px;
 }
 
-/* IMAGE MODAL */
+
+/* RESPONSIVE IMAGE MODAL */
 
 .modal {
     display: none;
     position: fixed;
     z-index: 1000;
     inset: 0;
+
     background-color: rgba(30, 29, 30, 0.92);
+
     justify-content: center;
     align-items: center;
-    padding: 25px;
+
+    padding: 4vh 4vw;
 }
 
 .modal.active {
     display: flex;
 }
 
+/* SAME MODAL SIZE FOR ALL ARTEFACTS */
+
 .modal-content {
     position: relative;
+
     width: 100%;
-    max-width: 1400px;
-    max-height: 90vh;
+    height: 100%;
+
+    max-width: 1100px;
+    max-height: 82vh;
+
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+/* KEEP IMAGES WITHIN THE MODAL */
+
 .modal-content img {
     width: 100%;
-    max-height: 85vh;
+    height: 100%;
+
+    max-width: 100%;
+    max-height: 100%;
+
     object-fit: contain;
+    object-position: center;
+
     display: block;
 }
 
+/* CLOSE BUTTON */
+
 .close-modal {
     position: absolute;
-    top: -38px;
-    right: 0;
-    background: none;
+
+    top: 10px;
+    right: 10px;
+
+    background: rgba(30, 29, 30, 0.65);
     border: none;
+    border-radius: 50%;
+
+    width: 44px;
+    height: 44px;
+
     color: white;
-    font-size: 35px;
+    font-size: 32px;
     font-weight: 300;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     cursor: pointer;
+    z-index: 1001;
 }
+
+/* PREVENT BACKGROUND SCROLL */
 
 body.modal-open {
     overflow: hidden;
 }
 
+/* IPAD LANDSCAPE AND PORTRAIT */
+
+@media screen and (min-width: 600px) {
+
+    .modal {
+        padding: 5vh 5vw;
+    }
+
+    .modal-content {
+        max-width: 1000px;
+        max-height: 82vh;
+    }
+}
+
+/* SMALLER SCREENS */
+
+@media screen and (max-width: 599px) {
+
+    .modal {
+        padding: 5vh 4vw;
+    }
+
+    .modal-content {
+        max-height: 85vh;
+    }
+
+    .close-modal {
+        top: 5px;
+        right: 5px;
+    }
+}
+      
 /* STANDARD IPAD LANDSCAPE
    Approximately 1024 x 768 */
 
