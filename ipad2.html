@@ -1,0 +1,632 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Artefact Explorer</title>
+
+<style>
+
+/* GENERAL */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #dddbdc;
+    color: #3a383a;
+    font-family: 'Gotham', 'Helvetica Neue',
+                 Helvetica, Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 25px 30px;
+}
+
+/* HEADER */
+
+header {
+    text-align: center;
+    margin-bottom: 18px;
+    width: 100%;
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+
+hr {
+    width: 100%;
+    max-width: 1200px;
+    border: none;
+    border-top: 1px solid #3a383a;
+    margin-bottom: 18px;
+}
+
+.description {
+    font-size: 16pt;
+    line-height: 1.5;
+    text-align: center;
+    max-width: 950px;
+    margin-bottom: 5px;
+}
+
+.citation {
+    font-size: 12pt;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* MAIN LAYOUT */
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    width: 100%;
+    align-items: start;
+}
+
+.category-row {
+    width: 100%;
+    min-width: 0;
+    text-align: center;
+}
+
+.category-row h2 {
+    font-size: 1.35rem;
+    font-weight: 500;
+    margin-bottom: 18px;
+}
+
+/* THUMBNAIL GRID */
+
+.modal-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    width: 100%;
+}
+
+/* THUMBNAIL BUTTONS */
+
+.modal-trigger {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    min-width: 0;
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 8px;
+    background-color: #393739;
+
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.modal-trigger:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.modal-trigger:focus-visible {
+    outline: 2px solid #393739;
+    outline-offset: 3px;
+}
+
+.modal-trigger img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    background-color: #dddbdc;
+    border-radius: 4px;
+}
+
+/* IMAGE MODAL */
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    inset: 0;
+
+    background-color: rgba(30, 29, 30, 0.92);
+
+    justify-content: center;
+    align-items: center;
+
+    padding: 4vh 4vw;
+}
+
+.modal.active {
+    display: flex;
+}
+
+/* SAME MODAL DIMENSIONS FOR ALL GROUPS */
+
+.modal-content {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+    max-width: 1000px;
+    max-height: 82vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content img {
+    max-width: 100%;
+    max-height: 82vh;
+
+    width: auto;
+    height: auto;
+
+    object-fit: contain;
+    object-position: center;
+
+    display: block;
+}
+
+/* CLOSE BUTTON */
+
+.close-modal {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+
+    background: rgba(30, 29, 30, 0.65);
+    border: none;
+    border-radius: 50%;
+
+    width: 44px;
+    height: 44px;
+
+    color: white;
+    font-size: 32px;
+    font-weight: 300;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+    z-index: 1001;
+}
+
+/* PREVENT BACKGROUND SCROLL */
+
+body.modal-open {
+    overflow: hidden;
+}
+
+/* FOOTER */
+
+footer {
+    margin-top: auto;
+    padding: 30px 10px 5px;
+    text-align: center;
+    color: #3a383a;
+    font-family: Arial, sans-serif;
+    font-size: 10pt;
+}
+
+/* IPAD LANDSCAPE */
+
+@media screen
+and (min-width: 768px)
+and (max-width: 1100px)
+and (orientation: landscape) {
+
+    body {
+        padding: 18px 24px;
+    }
+
+    header {
+        margin-bottom: 12px;
+    }
+
+    h1 {
+        font-size: 1.7rem;
+    }
+
+    hr {
+        margin-bottom: 12px;
+    }
+
+    .description {
+        font-size: 14pt;
+    }
+
+    .citation {
+        font-size: 11pt;
+        margin-bottom: 23px;
+    }
+
+    .container {
+        gap: 20px;
+    }
+
+    .category-row h2 {
+        font-size: 1.2rem;
+        margin-bottom: 14px;
+    }
+
+    .modal-grid {
+        gap: 8px;
+    }
+
+    footer {
+        padding-top: 20px;
+    }
+}
+
+/* IPAD PORTRAIT */
+
+@media screen
+and (min-width: 600px)
+and (max-width: 900px)
+and (orientation: portrait) {
+
+    body {
+        padding: 22px;
+    }
+
+    .container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .category-row {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .modal-grid {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+    .modal-content {
+        max-height: 82vh;
+    }
+}
+
+/* MOBILE */
+
+@media screen and (max-width: 599px) {
+
+    body {
+        padding: 22px 15px;
+    }
+
+    h1 {
+        font-size: 1.7rem;
+    }
+
+    .description {
+        font-size: 13pt;
+    }
+
+    .citation {
+        font-size: 10pt;
+        margin-bottom: 25px;
+    }
+
+    .container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .category-row {
+        max-width: 420px;
+        margin: 0 auto;
+    }
+
+    .modal-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .modal {
+        padding: 5vh 4vw;
+    }
+
+    .modal-content {
+        max-height: 85vh;
+    }
+
+    .modal-content img {
+        max-height: 85vh;
+    }
+
+    .close-modal {
+        top: 5px;
+        right: 5px;
+    }
+
+    footer {
+        padding-top: 25px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Select a group to explore</h1>
+</header>
+
+<hr>
+
+<p class="description">
+    "The ancients...thought that which could not happen in
+    reality, could not have a sure justification in its copies."
+</p>
+
+<p class="citation">
+    Vitruvius, On Architecture 4.2.5
+</p>
+
+
+<!-- MAIN CONTENT -->
+
+<main class="container">
+
+
+    <!-- CUPS -->
+
+    <section class="category-row">
+
+        <h2>Cups</h2>
+
+        <div class="modal-grid">
+
+            <button class="modal-trigger"
+                data-image="images/cup1.png"
+                aria-label="View Cup 1">
+
+                <img src="images/cup1-thumb.png"
+                     alt="Cup 1">
+
+            </button>
+
+            <button class="modal-trigger"
+                data-image="images/cup2.png"
+                aria-label="View Cup 2">
+
+                <img src="images/cup2-thumb.png"
+                     alt="Cup 2">
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- FIGURINES -->
+
+    <section class="category-row">
+
+        <h2>Figurines</h2>
+
+        <div class="modal-grid">
+
+            <button class="modal-trigger"
+                data-image="images/figurine1.png"
+                aria-label="View Figurine 1">
+
+                <img src="images/figurine1-thumb.png"
+                     alt="Figurine 1">
+
+            </button>
+
+            <button class="modal-trigger"
+                data-image="images/figurine2.png"
+                aria-label="View Figurine 2">
+
+                <img src="images/figurine2-thumb.png"
+                     alt="Figurine 2">
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- SHABTIS -->
+
+    <section class="category-row">
+
+        <h2>Shabtis</h2>
+
+        <div class="modal-grid">
+
+            <button class="modal-trigger"
+                data-image="images/shabti1.png"
+                aria-label="View Shabti 1">
+
+                <img src="images/shabti1-thumb.png"
+                     alt="Shabti 1">
+
+            </button>
+
+            <button class="modal-trigger"
+                data-image="images/shabti2.png"
+                aria-label="View Shabti 2">
+
+                <img src="images/shabti2-thumb.png"
+                     alt="Shabti 2">
+
+            </button>
+
+            <button class="modal-trigger"
+                data-image="images/shabti3.png"
+                aria-label="View Shabti 3">
+
+                <img src="images/shabti3-thumb.png"
+                     alt="Shabti 3">
+
+            </button>
+
+            <button class="modal-trigger"
+                data-image="images/shabti4.png"
+                aria-label="View Shabti 4">
+
+                <img src="images/shabti4-thumb.png"
+                     alt="Shabti 4">
+
+            </button>
+
+            <button class="modal-trigger"
+                data-image="images/shabti5.png"
+                aria-label="View Shabti 5">
+
+                <img src="images/shabti5-thumb.png"
+                     alt="Shabti 5">
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+<!-- SHARED IMAGE MODAL -->
+
+<div class="modal" id="imageModal"
+     role="dialog"
+     aria-modal="true"
+     aria-label="Artefact image viewer">
+
+    <div class="modal-content">
+
+        <button class="close-modal"
+                id="closeModal"
+                aria-label="Close image viewer">
+
+            &times;
+
+        </button>
+
+        <img id="modalImage"
+             src=""
+             alt="Enlarged artefact image">
+
+    </div>
+
+</div>
+
+
+<footer>
+</footer>
+
+
+<!-- JAVASCRIPT -->
+
+<script>
+
+const modal = document.getElementById('imageModal');
+
+const modalImage = document.getElementById('modalImage');
+
+const closeButton = document.getElementById('closeModal');
+
+const triggers = document.querySelectorAll('.modal-trigger');
+
+let previouslyFocused = null;
+
+
+// OPEN MODAL
+
+triggers.forEach(trigger => {
+
+    trigger.addEventListener('click', () => {
+
+        previouslyFocused = document.activeElement;
+
+        modalImage.src = trigger.dataset.image;
+
+        modal.classList.add('active');
+
+        document.body.classList.add('modal-open');
+
+        closeButton.focus();
+
+    });
+
+});
+
+
+// CLOSE MODAL
+
+function closeModal() {
+
+    modal.classList.remove('active');
+
+    document.body.classList.remove('modal-open');
+
+    modalImage.src = '';
+
+    if (previouslyFocused) {
+        previouslyFocused.focus();
+    }
+
+}
+
+closeButton.addEventListener('click', closeModal);
+
+
+// CLOSE BY CLICKING OUTSIDE IMAGE
+
+modal.addEventListener('click', event => {
+
+    if (event.target === modal) {
+        closeModal();
+    }
+
+});
+
+
+// CLOSE USING ESCAPE
+
+document.addEventListener('keydown', event => {
+
+    if (event.key === 'Escape' &&
+        modal.classList.contains('active')) {
+
+        closeModal();
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>
