@@ -111,13 +111,31 @@ hr {
     margin-bottom: 18px;
 }
 
-/* THUMBNAIL GRID */
+/* THUMBNAIL GRIDS */
 
 .modal-grid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 12px;
     width: 100%;
+    min-width: 0;
+}
+
+/* CUPS: VERTICAL STACK */
+
+.cups .modal-grid {
+    grid-template-columns: 1fr;
+}
+
+/* FIGURINES: TWO HORIZONTAL THUMBNAILS */
+
+.figurines .modal-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* SHABTIS: FIVE HORIZONTAL THUMBNAILS */
+
+.shabtis .modal-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
 /* THUMBNAIL BUTTONS */
@@ -339,8 +357,17 @@ and (orientation: portrait) {
         grid-row: 2;
     }
 
-    .modal-grid {
+    .cups .modal-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .figurines .modal-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .shabtis .modal-grid {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 5px;
     }
 
 }
@@ -384,8 +411,17 @@ and (orientation: portrait) {
         margin: 0 auto;
     }
 
-    .modal-grid {
+    .cups .modal-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .figurines .modal-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .shabtis .modal-grid {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 5px;
     }
 
     .modal {
@@ -422,12 +458,11 @@ and (orientation: portrait) {
 <hr>
 
 <p class="description">
-    "The ancients...thought that which could not happen in
-    reality, could not have a sure justification in its copies."
+    "While it is difficult to fashion a likeness from reality, it is far harder to make a copy from a copy."
 </p>
 
 <p class="citation">
-    Vitruvius, On Architecture 4.2.5
+     Pliny the Younger, Letters 4.28
 </p>
 
 
@@ -436,7 +471,7 @@ and (orientation: portrait) {
 <main class="container">
 
 
-    <!-- COLUMN 1: CUPS -->
+    <!-- COLUMN 1: CUPS - VERTICAL -->
 
     <section class="category-row cups">
 
@@ -467,7 +502,7 @@ and (orientation: portrait) {
     </section>
 
 
-    <!-- COLUMN 2, ROW 1: FIGURINES -->
+    <!-- COLUMN 2, ROW 1: FIGURINES - HORIZONTAL -->
 
     <section class="category-row figurines">
 
@@ -498,7 +533,7 @@ and (orientation: portrait) {
     </section>
 
 
-    <!-- COLUMN 2, ROW 2: SHABTIS -->
+    <!-- COLUMN 2, ROW 2: SHABTIS - HORIZONTAL -->
 
     <section class="category-row shabtis">
 
